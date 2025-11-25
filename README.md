@@ -1,117 +1,221 @@
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Meal Planner</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <div class="container header-content">
-            <h1 id="app-title">Daily Meal Planner</h1>
-            <div class="lang-switcher">
-                <button onclick="changeLanguage('th')">ไทย</button>
-                <button onclick="changeLanguage('en')">EN</button>
-                <button onclick="changeLanguage('zh')">中文</button>
-            </div>
-        </div>
-    </header>
+<header>
+    <h1>Daily Meal Planner</h1>
 
-    <main class="container">
-        
-        <section class="control-bar card">
-            <div class="date-group">
-                <label for="plan-date" id="label-date">Select Date:</label>
-                <input type="date" id="plan-date">
-            </div>
-            <div class="actions">
-                <button id="btn-save" class="primary-btn">Save Plan</button>
-                <button id="btn-clear" class="danger-btn">Clear</button>
-            </div>
-        </section>
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="th">ไทย</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+    </div>
+</header>
 
-        <div class="planning-grid">
-            <div class="meal-column">
-                
-                <div class="card meal-section" id="section-breakfast">
-                    <h2 id="header-breakfast">Breakfast</h2>
-                    <ul class="food-list" id="list-breakfast">
-                        </ul>
-                    <div class="add-food-controls">
-                        <select id="select-breakfast" class="food-select"></select>
-                        <input type="number" id="qty-breakfast" value="1" min="0.5" step="0.5" class="qty-input">
-                        <button class="add-btn" onclick="addFood('breakfast')">+</button>
-                    </div>
-                </div>
+<main>
 
-                <div class="card meal-section" id="section-lunch">
-                    <h2 id="header-lunch">Lunch</h2>
-                    <ul class="food-list" id="list-lunch"></ul>
-                    <div class="add-food-controls">
-                        <select id="select-lunch" class="food-select"></select>
-                        <input type="number" id="qty-lunch" value="1" min="0.5" step="0.5" class="qty-input">
-                        <button class="add-btn" onclick="addFood('lunch')">+</button>
-                    </div>
-                </div>
+    <section class="meal-section" id="breakfast-section">
+        <h2 id="breakfast-title">Breakfast</h2>
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background: #fafafa;
+}
 
-                <div class="card meal-section" id="section-dinner">
-                    <h2 id="header-dinner">Dinner</h2>
-                    <ul class="food-list" id="list-dinner"></ul>
-                    <div class="add-food-controls">
-                        <select id="select-dinner" class="food-select"></select>
-                        <input type="number" id="qty-dinner" value="1" min="0.5" step="0.5" class="qty-input">
-                        <button class="add-btn" onclick="addFood('dinner')">+</button>
-                    </div>
-                </div>
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-                <div class="card meal-section" id="section-snack">
-                    <h2 id="header-snack">Snacks</h2>
-                    <ul class="food-list" id="list-snack"></ul>
-                    <div class="add-food-controls">
-                        <select id="select-snack" class="food-select"></select>
-                        <input type="number" id="qty-snack" value="1" min="0.5" step="0.5" class="qty-input">
-                        <button class="add-btn" onclick="addFood('snack')">+</button>
-                    </div>
-                </div>
+h1 {
+    margin: 0;
+}
 
-            </div>
+.lang-switch button {
+    margin-left: 5px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
 
-            <div class="summary-column">
-                <div class="card summary-card sticky">
-                    <h2 id="header-summary">Daily Summary</h2>
-                    
-                    <div class="total-calories">
-                        <span id="display-total-cals">0</span>
-                        <small>kcal</small>
-                    </div>
+.meal-section {
+    margin-top: 30px;
+    padding: 15px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
 
-                    <hr>
+.add-btn {
+    padding: 5px 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
 
-                    <div class="macros">
-                        <div class="macro-item">
-                            <span class="macro-label" id="label-protein">Protein</span>
-                            <span class="macro-val" id="val-protein">0g</span>
-                        </div>
-                        <div class="macro-item">
-                            <span class="macro-label" id="label-carbs">Carbs</span>
-                            <span class="macro-val" id="val-carbs">0g</span>
-                        </div>
-                        <div class="macro-item">
-                            <span class="macro-label" id="label-fat">Fat</span>
-                            <span class="macro-val" id="val-fat">0g</span>
-                        </div>
-                    </div>
+.meal-row {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
 
-                    <div id="ai-suggestion-area" style="display:none; margin-top: 20px;">
-                        <p class="ai-text">AI Recommendation loading...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+.meal-row select,
+.meal-row input {
+    padding: 6px;
+}
 
-    <script src="app.js"></script>
-</body>
-</html>
+#summary {
+    margin-top: 40px;
+    padding: 20px;
+    background: #fff6d6;
+    border: 1px solid #f5d46b;
+    border-radius: 6px;
+    font-size: 18px;
+}
+// ----------------------------
+//  DATABASE OF FOODS
+// ----------------------------
+const foods = [
+    { id: 1, name_th: "ข้าวกะเพราไก่", name_en: "Basil Chicken Rice", name_zh: "罗勒鸡饭", calories: 550 },
+    { id: 2, name_th: "ข้าวผัดหมู", name_en: "Pork Fried Rice", name_zh: "猪肉炒饭", calories: 600 },
+    { id: 3, name_th: "ส้มตำ", name_en: "Papaya Salad", name_zh: "木瓜沙拉", calories: 180 },
+    { id: 4, name_th: "ผัดไทย", name_en: "Pad Thai", name_zh: "泰式炒粉", calories: 420 }
+];
+
+let currentLang = "th";  // th / en / zh
+
+function getFoodName(food) {
+    if (currentLang === "en") return food.name_en;
+    if (currentLang === "zh") return food.name_zh;
+    return food.name_th;
+}
+
+// ----------------------------
+//  ADD MEAL ROW FUNCTION
+// ----------------------------
+function addMealRow(mealId) {
+    const container = document.getElementById(`${mealId}-list`);
+
+    const row = document.createElement("div");
+    row.className = "meal-row";
+
+    // Dropdown
+    const select = document.createElement("select");
+    foods.forEach(food => {
+        const option = document.createElement("option");
+        option.value = food.id;
+        option.textContent = getFoodName(food);
+        select.appendChild(option);
+    });
+
+    // Quantity Input
+    const qty = document.createElement("input");
+    qty.type = "number";
+    qty.min = "1";
+    qty.value = "1";
+
+    // Kcal display
+    const kcalSpan = document.createElement("span");
+    kcalSpan.textContent = "0 kcal";
+
+    function recalcRow() {
+        const food = foods.find(f => f.id == select.value);
+        const total = food.calories * Number(qty.value);
+        kcalSpan.textContent = `${total} kcal`;
+        updateSummary();
+    }
+
+    select.addEventListener("change", recalcRow);
+    qty.addEventListener("input", recalcRow);
+
+    row.appendChild(select);
+    row.appendChild(qty);
+    row.appendChild(kcalSpan);
+
+    container.appendChild(row);
+
+    recalcRow(); // initial calculate
+}
+
+// ----------------------------
+// SUMMARY CALCULATION
+// ----------------------------
+function updateSummary() {
+    const meals = ["breakfast", "lunch", "dinner", "snacks"];
+    let total = 0;
+
+    meals.forEach(meal => {
+        const rows = document.querySelectorAll(`#${meal}-list .meal-row`);
+        rows.forEach(row => {
+            const kcal = row.querySelector("span").textContent.replace(" kcal", "");
+            total += Number(kcal);
+        });
+    });
+
+    document.getElementById("total-kcal").textContent = `Total: ${total} kcal`;
+}
+
+// ----------------------------
+// LANGUAGE SWITCH
+// ----------------------------
+document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        currentLang = btn.dataset.lang;
+
+        // UPDATE FOOD NAMES
+        document.querySelectorAll("select").forEach(select => {
+            const value = select.value; // keep previous choice
+            select.innerHTML = "";
+
+            foods.forEach(food => {
+                const option = document.createElement("option");
+                option.value = food.id;
+                option.textContent = getFoodName(food);
+                select.appendChild(option);
+            });
+
+            select.value = value;
+        });
+
+        // UPDATE TITLES
+        if (currentLang === "th") {
+            document.getElementById("breakfast-title").textContent = "มื้อเช้า";
+            document.getElementById("lunch-title").textContent = "มื้อกลางวัน";
+            document.getElementById("dinner-title").textContent = "มื้อเย็น";
+            document.getElementById("snacks-title").textContent = "ของว่าง";
+            document.getElementById("summary-title").textContent = "สรุปวันนี้";
+        }
+
+        if (currentLang === "en") {
+            document.getElementById("breakfast-title").textContent = "Breakfast";
+            document.getElementById("lunch-title").textContent = "Lunch";
+            document.getElementById("dinner-title").textContent = "Dinner";
+            document.getElementById("snacks-title").textContent = "Snacks";
+            document.getElementById("summary-title").textContent = "Daily Summary";
+        }
+
+        if (currentLang === "zh") {
+            document.getElementById("breakfast-title").textContent = "早餐";
+            document.getElementById("lunch-title").textContent = "午餐";
+            document.getElementById("dinner-title").textContent = "晚餐";
+            document.getElementById("snacks-title").textContent = "点心";
+            document.getElementById("summary-title").textContent = "每日总结";
+        }
+    });
+});
+
+// ----------------------------
+// BUTTON SETUP
+// ----------------------------
+document.getElementById("add-breakfast").addEventListener("click", () => addMealRow("breakfast"));
+document.getElementById("add-lunch").addEventListener("click", () => addMealRow("lunch"));
+document.getElementById("add-dinner").addEventListener("click", () => addMealRow("dinner"));
+document.getElementById("add-snacks").addEventListener("click", () => addMealRow("snacks"));
+
+// create 1 row default
+addMealRow("breakfast");
